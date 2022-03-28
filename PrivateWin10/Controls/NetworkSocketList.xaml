@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="PrivateWin10.Controls.NetworkSocketList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PrivateWin10.Controls"
+             xmlns:l="clr-namespace:PrivateWin10"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:RateConverter x:Key="rateConverter"/>
+        <local:SizeConverter x:Key="sizeConverter"/>
+        <local:DateConverter x:Key="dateConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        
+        <ToolBar Grid.Row="0">
+            <Grid Margin="2,2">
+                <ComboBox Name="sockType" Text="" MinWidth="80" Background="White" SelectionChanged="sockType_SelectionChanged">
+                    
+                </ComboBox>
+            </Grid>
+            <Separator/>
+            <!--WrapPanel>
+                <Label Name="lblFilter" Content="Filter:"/>
+                <TextBox Name="txtSockFilter" MinWidth="150" Margin="0,2" HorizontalAlignment="Stretch" Text="" TextChanged="txtSockFilter_TextChanged"/>
+            </-->
+            <l:SearchTextBox x:Name="txtSockFilter" LabelText="Text Filter... (CTRL+F)" MinWidth="250" SearchMode="Instant" Margin="1,2" SearchEventTimeDelay="00:00:01" Search="TxtRuleFilter_Search"/>
+            <Separator/>
+            <!--ToggleButton Name="chkNoINet" Click="SocketTypeFilters_Click" ToolTip="Hide Internet (WWW) Traffic">
+                <Image Width="16" Height="16">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=chkNoINet, Path=IsChecked}" Value="true">
+                                    <Setter Property="Source" Value="{StaticResource Icon_NoINet2}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=chkNoINet, Path=IsChecked}" Value="false">
+                                    <Setter Property="Source" Value="{StaticResource Icon_NoINet}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </>
+
+            <ToggleButton Name="chkNoLAN" Click="SocketTypeFilters_Click" ToolTip="Hide LAN (Ethernet/WiFi) Traffic">
+                <Image Width="16" Height="16">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=chkNoLAN, Path=IsChecked}" Value="true">
+                                    <Setter Property="Source" Value="{StaticResource Icon_NoLan2}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=chkNoLAN, Path=IsChecked}" Value="false">
+                                    <Setter Property="Source" Value="{StaticResource Icon_NoLan}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </ToggleButton>
+
+            <!-ToggleButton Name="chkNoMulti" Click="SocketTypeFilters_Click" ToolTip="Hide Multicast Packets" IsChecked="true">
+                <Image Width="16" Height="16">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=chkNoMulti, Path=IsChecked}" Value="true">
+                                    <Setter Property="Source" Value="{StaticResource Icon_NoMulti2}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=chkNoMulti, Path=IsChecked}" Value="false">
+                                    <Setter Property="Source" Value="{StaticResource Icon_NoMulti}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </->
+
+            <ToggleButton Name="chkNoLocal" Click="SocketTypeFilters_Click" ToolTip="Hide Local Host Traffic" IsChecked="true">
+                <Image Width="16" Height="16">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=chkNoLocal, Path=IsChecked}" Value="true">
+                                    <Setter Property="Source" Value="{StaticResource Icon_NoLocal2}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=chkNoLocal, Path=IsChecked}" Value="false">
+                                    <Setter Property="Source" Value="{StaticResource Icon_NoLocal}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </ToggleButton-->
+        </ToolBar>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <!--ColumnDefinition Width="150"/-->
+            </Grid.ColumnDefinitions>
+            <!--GroupBox Name="grpSock" Header="Connection Log"-->
+            <DataGrid Name="socksGrid" AutoGenerateColumns="False" IsReadOnly="true" GridLinesVisibility="All" SelectionChanged="SockGrid_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Ico">
+                        <!-- ClipboardContentBinding="{Binding Name}"-->
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Margin="2,0,2,0" Width="16" Height="16" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Icon}" />
+                                    <!--TextBlock Grid.Column="1" Height="16" HorizontalAlignment="Left" Margin="2,0,2,0" VerticalAlignment="Center" Text="{Binding Name}" /-->
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Width="200" Header="Name" Binding="{Binding Name}" />
+                    <!-- SortMemberPath="RawTimeStamp" -->
+                    <DataGridTextColumn Header="Time Stamp" Binding="{Binding TimeStamp, Converter={StaticResource dateConverter}}" />
+                    <DataGridTextColumn Header="State" Binding="{Binding State}" />
+                    <DataGridTextColumn Header="Protocol" Binding="{Binding Protocol}" />
+                    <DataGridTextColumn Width="150" Header="Remote Address" Binding="{Binding DestAddress}" />
+                    <DataGridTextColumn Width="150" Header="Remote Ports" Binding="{Binding DestPorts}" />
+                    <DataGridTextColumn Width="150" Header="Local Address" Binding="{Binding SrcAddress}" />
+                    <DataGridTextColumn Width="150" Header="Local Ports" Binding="{Binding SrcPorts}" />
+                    <DataGridTextColumn Width="150" Header="Access" Binding="{Binding Access}" />
+                    <DataGridTextColumn Width="150" Header="Upload" Binding="{Binding Upload, Converter={StaticResource rateConverter}}" />
+                    <DataGridTextColumn Width="150" Header="Download" Binding="{Binding Download, Converter={StaticResource rateConverter}}" />
+                    <DataGridTextColumn Width="150" Header="Uploaded" Binding="{Binding Uploaded, Converter={StaticResource sizeConverter}}" />
+                    <DataGridTextColumn Width="150" Header="Downloaded" Binding="{Binding Downloaded, Converter={StaticResource sizeConverter}}" />
+                    <DataGridTextColumn Header="Program" Binding="{Binding Program}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <!--/-->
+            <!--ScrollViewer Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+        </-->
+        </Grid>
+    </Grid>
+</UserControl>

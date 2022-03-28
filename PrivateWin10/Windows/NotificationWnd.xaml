@@ -1,0 +1,50 @@
+﻿<Window x:Class="PrivateWin10.Windows.NotificationWnd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:draw="clr-namespace:System.Drawing;assembly=System.Drawing"
+        xmlns:local="clr-namespace:PrivateWin10.Windows"
+        xmlns:controls="clr-namespace:PrivateWin10.Controls"
+        mc:Ignorable="d"
+        Title="Notification Window" 
+        ShowActivated="false" WindowStyle="ToolWindow"
+        LocationChanged="Window_LocationChanged"
+        SizeChanged="Window_LocationChanged"
+        Height="400" Width="300" MinHeight="300" MinWidth="300" ShowInTaskbar="false" Closing="Window_Closing">
+
+    <Window.Resources>
+        <controls:IconToImageSourceConverter x:Key="IconToImageSourceConverter"/>
+    </Window.Resources>
+    <Grid>
+        <TabControl Name="tabs" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="0" SelectionChanged="Tabs_SelectionChanged">
+            <TabItem Name="conTab" Visibility="Visible">
+                <TabItem.Header>
+                    <WrapPanel>
+                        <TextBlock Text="Connections"/>
+                        <Image Name="imgCon" Margin="2,0,0,0" Height="16" Width="16" Source="{Binding Source={x:Static draw:SystemIcons.Warning}, Converter={StaticResource IconToImageSourceConverter}, Mode=OneWay}" Visibility="Hidden"/>
+                    </WrapPanel>
+                </TabItem.Header>
+                <controls:ConnectionNotify x:Name="ConNotify"/>
+            </TabItem>
+            <TabItem Name="ruleTab" Visibility="Visible">
+                <TabItem.Header>
+                    <WrapPanel>
+                        <TextBlock Text="Rules"/>
+                        <Image Name="imgRule" Margin="2,0,0,0" Height="16" Width="16" Source="{Binding Source={x:Static draw:SystemIcons.Warning}, Converter={StaticResource IconToImageSourceConverter}, Mode=OneWay}" Visibility="Hidden"/>
+                    </WrapPanel>
+                </TabItem.Header>
+                <controls:RuleNotify x:Name="RuleNotify"/>
+            </TabItem>
+            <TabItem Name="tweakTab" Visibility="Visible">
+                <TabItem.Header>
+                    <WrapPanel>
+                        <TextBlock Text="Twekas"/>
+                        <Image Name="imgTweak" Margin="2,0,0,0" Height="16" Width="16" Source="{Binding Source={x:Static draw:SystemIcons.Warning}, Converter={StaticResource IconToImageSourceConverter}, Mode=OneWay}" Visibility="Hidden"/>
+                    </WrapPanel>
+                </TabItem.Header>
+                <controls:TweakNotify x:Name="TweakNotify"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
